@@ -1,6 +1,9 @@
 import { NameList } from "@/interfaces/interfaces";
 import TaskItem from "./TaskItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "./ui/button";
+import { Dialog } from "@radix-ui/react-dialog";
+import DialogTask from "./DialogTask";
 
 type props = {
   tasks: NameList;
@@ -16,6 +19,7 @@ export default function TaskItems({ tasks }: props) {
             {tasks.taskList.map((task) => (
               <TaskItem key={task.id} task={task} />
             ))}
+            <DialogTask isEdit={false} btn={<Button>Add Task</Button>} />
           </div>
         </div>
       </ScrollArea>
