@@ -1,8 +1,8 @@
-export type status = "process" | "complete" | "to do";
+export type status = "process" | "completed" | "to do";
 
 export interface Task {
   id: number;
-  name: string;
+  description: string;
   status: string;
 }
 
