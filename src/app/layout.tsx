@@ -28,7 +28,8 @@ export default function RootLayout({
           <TaskProvider>
             <Navbar />
             {children}
-            <Image
+            {/* ESTA LA IMG POR EL CAPACITOR */}
+            <img
               src={"/images/background.jpg"}
               width={1920}
               height={1080}
