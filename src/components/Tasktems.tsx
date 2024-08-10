@@ -17,7 +17,7 @@ export default function TaskItems({ tasks }: props) {
           {tasks.name === "" ? "No name" : tasks.name}
         </div>
         <p className="">
-          <DeleteTaskList id={tasks.id} name={tasks.name} />
+          <DeleteTaskList  id={tasks.id} name={tasks.name} />
         </p>
       </span>
       <ScrollArea className="rounded-md max-h-[80vh] h-auto w-full">

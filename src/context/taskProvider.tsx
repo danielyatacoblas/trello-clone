@@ -1,16 +1,20 @@
 "use client";
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { taskReducer } from "./reducer";
 import { Task, TaskState } from "@/interfaces/interfaces";
 import { TaskContext } from "./taskContext";
-import { localTasks } from "@/utils/localTasks";
+import { localTasks, saveTasksToLocalStorage } from "@/utils/localTasks";
 
-const INITIAL_STATE: TaskState = localTasks();
 type props = {
   children: React.ReactNode;
 };
 export default function TaskProvider({ children }: props) {
-  const [taskState, dispatch] = useReducer(taskReducer, INITIAL_STATE);
+  const [taskState, dispatch] = useReducer(taskReducer, localTasks());
+  
+  useEffect(() => {
+    saveTasksToLocalStorage(taskState); // Guarda los datos en localStorage
+  }, [taskState]); 
+
 
   const createTaskList = (nameList: string) => {
     dispatch({ type: "CREATE_LIST", payload: nameList });
@@ -42,6 +46,8 @@ export default function TaskProvider({ children }: props) {
   const replaceTaskList = (taskList: TaskState) => {
     dispatch({ type: "REPLACE", payload: taskList });
   };
+
+
 
   return (
     <TaskContext.Provider
