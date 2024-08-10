@@ -10,11 +10,10 @@ type props = {
 };
 export default function TaskProvider({ children }: props) {
   const [taskState, dispatch] = useReducer(taskReducer, localTasks());
-  
+
   useEffect(() => {
     saveTasksToLocalStorage(taskState); // Guarda los datos en localStorage
-  }, [taskState]); 
-
+  }, [taskState]);
 
   const createTaskList = (nameList: string) => {
     dispatch({ type: "CREATE_LIST", payload: nameList });
@@ -46,8 +45,6 @@ export default function TaskProvider({ children }: props) {
   const replaceTaskList = (taskList: TaskState) => {
     dispatch({ type: "REPLACE", payload: taskList });
   };
-
-
 
   return (
     <TaskContext.Provider

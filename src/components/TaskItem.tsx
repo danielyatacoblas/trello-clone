@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useState } from "react";
 import { DeleteTask } from "./DeleteTask";
 import DialogTask from "./DialogTask";
 import useTasks from "@/hooks/useTasks";
