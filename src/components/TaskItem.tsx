@@ -20,16 +20,15 @@ type props = {
 };
 
 export default function TaskItem({ idList, task }: props) {
-  const [status, setStatus] = useState(task.status);
   const { updateStatus } = useTasks();
 
   const currentStatus = (
     <span
       id="statusTooltip"
       className={`w-4 h-4 rounded-full ${
-        status === "to do"
+        task.status === "to do"
           ? "bg-red-500"
-          : status === "completed"
+          : task.status === "completed"
           ? "bg-green-500"
           : "bg-orange-500"
       }`}
@@ -37,7 +36,6 @@ export default function TaskItem({ idList, task }: props) {
   );
   const handleStatus = (value: string) => {
     updateStatus(idList, task.id, value);
-    setStatus(value);
   };
 
   return (
@@ -49,7 +47,10 @@ export default function TaskItem({ idList, task }: props) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>{currentStatus}</DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuRadioGroup value={status} onValueChange={handleStatus}>
+            <DropdownMenuRadioGroup
+              value={task.status}
+              onValueChange={handleStatus}
+            >
               <DropdownMenuRadioItem value="to do">to do</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="process">
                 process
