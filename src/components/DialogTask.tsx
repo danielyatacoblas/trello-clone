@@ -28,11 +28,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
+import useTasks from "@/hooks/useTasks";
 
 type DialogTaskProps = {
   isEdit: boolean;
   btn: React.ReactNode;
   task?: Task;
+  idList: number;
 };
 
 const taskSchema = z.object({
@@ -41,21 +43,27 @@ const taskSchema = z.object({
   status: z.string().min(1, { message: "Status is required" }),
 });
 
-export default function DialogTask({ task, isEdit, btn }: DialogTaskProps) {
+export default function DialogTask({
+  task,
+  isEdit,
+  btn,
+  idList,
+}: DialogTaskProps) {
   const [open, setOpen] = useState(false);
+  const { createTask, updateTask } = useTasks();
 
   const form = useForm<Task>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
-      id: task?.id ?? 1,
-      description: task?.description ?? "",
-      status: task?.status ?? "",
+      id: task?.id,
+      description: task?.description || "",
+      status: task?.status || "",
     },
   });
 
   const onSubmit = (data: Task) => {
     setOpen(false);
-    alert(JSON.stringify(data, null, 2));
+    isEdit ? updateTask(idList, task?.id ?? 0, data) : createTask(idList, data);
     form.reset();
   };
 

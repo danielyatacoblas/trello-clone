@@ -12,7 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { ChangeEvent, useState } from "react";
-export default function AddListTask() {
+
+type props = {
+  createTaskList: (nameList: string) => void;
+};
+
+export default function AddListTask({ createTaskList }: props) {
   const [listName, setListName] = useState<string>("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +25,7 @@ export default function AddListTask() {
   };
 
   const submitList = () => {
+    createTaskList(listName);
     setListName("");
   };
 

@@ -9,27 +9,26 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import useTasks from "@/hooks/useTasks";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 
 type props = {
-  idList: number;
   id: number;
+  name: string;
 };
 
-export function DeleteTask({ idList, id }: props) {
-  const { deleteTask } = useTasks();
+export function DeleteTaskList({ id, name }: props) {
+  const { deleteTaskList } = useTasks();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="w-6 h-6 p-0" variant={"destructive"}>
-          <TrashIcon />
-        </Button>
+        <Cross2Icon />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Desea eliminar la tarea?</AlertDialogTitle>
+          <AlertDialogTitle>
+            Desea eliminar la lista de tareas {name}?
+          </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
@@ -37,7 +36,7 @@ export function DeleteTask({ idList, id }: props) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={() => deleteTask(idList, id)}>
+          <AlertDialogAction onClick={() => deleteTaskList(id)}>
             Continuar
           </AlertDialogAction>
         </AlertDialogFooter>

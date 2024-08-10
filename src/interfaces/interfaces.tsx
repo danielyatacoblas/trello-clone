@@ -7,6 +7,11 @@ export interface Task {
 }
 
 export interface NameList {
+  id: number;
   name: string;
   taskList: Task[];
+}
+
+export interface TaskState {
+  taskItems: NameList[];
 }
