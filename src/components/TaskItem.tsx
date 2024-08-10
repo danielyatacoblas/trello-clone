@@ -10,15 +10,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DeleteTask } from "./DeleteTask";
 import DialogTask from "./DialogTask";
+import useTasks from "@/hooks/useTasks";
 type props = {
+  idList: number;
   task: Task;
 };
 
-export default function TaskItem({ task }: props) {
+export default function TaskItem({ idList, task }: props) {
   const [status, setStatus] = useState(task.status);
+  const { updateStatus } = useTasks();
 
   const currentStatus = (
     <span
@@ -33,6 +36,7 @@ export default function TaskItem({ task }: props) {
     />
   );
   const handleStatus = (value: string) => {
+    updateStatus(idList, task.id, value);
     setStatus(value);
   };
 
@@ -57,6 +61,7 @@ export default function TaskItem({ task }: props) {
           </DropdownMenuContent>
         </DropdownMenu>
         <DialogTask
+          idList={idList}
           isEdit={true}
           task={task}
           btn={
@@ -65,7 +70,7 @@ export default function TaskItem({ task }: props) {
             </Button>
           }
         />
-        <DeleteTask id={task.id} />
+        <DeleteTask idList={idList} id={task.id} />
       </div>
     </div>
   );

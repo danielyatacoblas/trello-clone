@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { nunito } from "@/components/fonts";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
+import TaskProvider from "@/context/taskProvider";
 
 export const metadata: Metadata = {
   title: "Clone Trello",
@@ -24,15 +25,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          {children}
-          <Image
-            src={"/images/background.jpg"}
-            width={1920}
-            height={1080}
-            alt="background"
-            className="fixed w-screen h-screen object-cover  top-0 -z-10 opacity-45"
-          />
+          <TaskProvider>
+            <Navbar />
+            {children}
+            <Image
+              src={"/images/background.jpg"}
+              width={1920}
+              height={1080}
+              alt="background"
+              className="fixed w-screen h-screen object-cover  top-0 -z-10 opacity-45"
+            />{" "}
+          </TaskProvider>
         </ThemeProvider>
       </body>
     </html>
