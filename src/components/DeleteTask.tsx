@@ -29,10 +29,10 @@ export function DeleteTask({ idList, id }: props) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Desea eliminar la tarea?</AlertDialogTitle>
+          <AlertDialogTitle>¿Desea eliminar la tarea?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Esta acción no se puede deshacer. La tarjeta se eliminará
+            permanentemente.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

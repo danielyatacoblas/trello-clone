@@ -27,11 +27,11 @@ export function DeleteTaskList({ id, name }: props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Desea eliminar la lista de tareas {name}?
+            ¿Desea eliminar la lista de tareas {name}?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Esta acción no se puede deshacer. Se eliminará permanentemente la
+            lista y todas sus tarjetas.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
