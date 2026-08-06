@@ -1,5 +1,5 @@
 "use client";
-import { NameList } from "@/interfaces/interfaces";
+import { NameList, Task } from "@/interfaces/interfaces";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
 import DialogTask from "./DialogTask";
@@ -13,9 +13,12 @@ import {
 
 type props = {
   tasks: NameList;
+  visibleTasks: Task[];
 };
 
-export default function TaskItems({ tasks }: props) {
+export default function TaskItems({ tasks, visibleTasks }: props) {
+  const total = tasks.taskList.length;
+  const visible = visibleTasks.length;
   const { setNodeRef } = useDroppable({
     id: tasks.id,
     data: { type: "list" },
@@ -28,7 +31,13 @@ export default function TaskItems({ tasks }: props) {
     >
       <span className="flex items-center font-semibold text-xl underline select-none w-full">
         <div className="flex-1 text-center">
-          {tasks.name === "" ? "Sin nombre" : tasks.name}
+          {tasks.name === "" ? "Sin nombre" : tasks.name}{" "}
+          <span
+            className="no-underline text-sm font-normal rounded-full bg-primary text-primary-foreground px-2 py-0.5 align-middle"
+            title="Tarjetas en la lista"
+          >
+            {visible === total ? total : `${visible}/${total}`}
+          </span>
         </div>
         <p className="">
           <DeleteTaskList  id={tasks.id} name={tasks.name} />
@@ -38,10 +47,10 @@ export default function TaskItems({ tasks }: props) {
         <div className="p-1 h-auto">
           <div className="flex flex-col gap-4 p-2 h-auto">
             <SortableContext
-              items={tasks.taskList.map((task) => task.id)}
+              items={visibleTasks.map((task) => task.id)}
               strategy={verticalListSortingStrategy}
             >
-              {tasks.taskList.map((task) => (
+              {visibleTasks.map((task) => (
                 <SortableTaskItem idList={tasks.id} key={task.id} task={task} />
               ))}
             </SortableContext>
