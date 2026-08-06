@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import TaskItems from "./Tasktems";
+import TaskItems from "./TaskItems";
 import useTasks from "@/hooks/useTasks";
 import {ReloadIcon} from "@radix-ui/react-icons"
 
