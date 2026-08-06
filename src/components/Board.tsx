@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import TaskItems from "./TaskItems";
 import TaskItem from "./TaskItem";
 import useTasks from "@/hooks/useTasks";
+import useFilters from "@/hooks/useFilters";
+import { StatusFilter } from "@/context/filterContext";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Task } from "@/interfaces/interfaces";
 import {
@@ -19,8 +21,15 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
+const statusChips: { value: Exclude<StatusFilter, null>; label: string; color: string }[] = [
+  { value: "to do", label: "Por hacer", color: "bg-red-500" },
+  { value: "process", label: "En proceso", color: "bg-orange-500" },
+  { value: "completed", label: "Completado", color: "bg-green-500" },
+];
+
 export default function Board() {
   const { taskState, replaceTaskList } = useTasks();
+  const { search, statusFilter, setStatusFilter } = useFilters();
   const [hydrated, setHydrated] = useState(false);
   const [activeTask, setActiveTask] = useState<Task | null>(null);
   const [activeListId, setActiveListId] = useState<string | null>(null);
@@ -41,6 +50,15 @@ export default function Board() {
   if (!hydrated) {
     return <div className="animate-spin"><ReloadIcon/></div>;
   }
+
+  // Filtrado derivado del estado (no modifica lo persistido en localStorage)
+  const matchesFilters = (task: Task): boolean => {
+    const matchesSearch = task.description
+      .toLowerCase()
+      .includes(search.trim().toLowerCase());
+    const matchesStatus = !statusFilter || task.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  };
 
   // Devuelve el id de la lista que contiene la tarea, o el propio id si es una lista
   const findListId = (id: string): string | undefined => {
@@ -141,10 +159,33 @@ export default function Board() {
         setActiveListId(null);
       }}
     >
+      <div className="flex flex-wrap items-center gap-2 w-full py-3">
+        {statusChips.map((chip) => (
+          <button
+            key={chip.value}
+            type="button"
+            onClick={() =>
+              setStatusFilter(statusFilter === chip.value ? null : chip.value)
+            }
+            className={`flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold transition-colors ${
+              statusFilter === chip.value
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-background border-gray-400 hover:bg-accent"
+            }`}
+          >
+            <span className={`w-2.5 h-2.5 rounded-full ${chip.color}`} />
+            {chip.label}
+          </button>
+        ))}
+      </div>
       <section className="flex flex-col justify-start items-start w-full h-auto max-h-[80vh] overflow-x-auto overflow-y-hidden">
         <div className="flex gap-2 p-1">
             {taskState.taskItems.map((tasks) => (
-              <TaskItems key={tasks.id} tasks={tasks} />
+              <TaskItems
+                key={tasks.id}
+                tasks={tasks}
+                visibleTasks={tasks.taskList.filter(matchesFilters)}
+              />
             ))}
         </div>
       </section>
