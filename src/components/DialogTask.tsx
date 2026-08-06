@@ -34,11 +34,11 @@ type DialogTaskProps = {
   isEdit: boolean;
   btn: React.ReactNode;
   task?: Task;
-  idList: number;
+  idList: string;
 };
 
 const taskSchema = z.object({
-  id: z.number().optional(),
+  id: z.string().optional(),
   description: z.string().min(5, { message: "Description is required" }),
   status: z.string().min(1, { message: "Status is required" }),
 });
@@ -63,7 +63,7 @@ export default function DialogTask({
 
   const onSubmit = (data: Task) => {
     setOpen(false);
-    isEdit ? updateTask(idList, task?.id ?? 0, data) : createTask(idList, data);
+    isEdit ? updateTask(idList, task?.id ?? "", data) : createTask(idList, data);
     form.reset();
   };
 

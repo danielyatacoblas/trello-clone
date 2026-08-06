@@ -13,7 +13,7 @@ import useTasks from "@/hooks/useTasks";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 type props = {
-  id: number;
+  id: string;
   name: string;
 };
 

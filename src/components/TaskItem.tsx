@@ -14,7 +14,7 @@ import { DeleteTask } from "./DeleteTask";
 import DialogTask from "./DialogTask";
 import useTasks from "@/hooks/useTasks";
 type props = {
-  idList: number;
+  idList: string;
   task: Task;
 };
 

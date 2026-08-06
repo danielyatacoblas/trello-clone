@@ -14,8 +14,8 @@ import useTasks from "@/hooks/useTasks";
 import { TrashIcon } from "@radix-ui/react-icons";
 
 type props = {
-  idList: number;
-  id: number;
+  idList: string;
+  id: string;
 };
 
 export function DeleteTask({ idList, id }: props) {
