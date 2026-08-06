@@ -18,28 +18,28 @@ export default function TaskProvider({ children }: props) {
   const createTaskList = (nameList: string) => {
     dispatch({ type: "CREATE_LIST", payload: nameList });
   };
-  const deleteTaskList = (id: number) => {
+  const deleteTaskList = (id: string) => {
     dispatch({ type: "DELETE_LIST", payload: id });
   };
-  const createTask = (idList: number, newTask: Task) => {
+  const createTask = (idList: string, newTask: Task) => {
     dispatch({
       type: "CREATE_TASK",
       payload: { idList: idList, task: newTask },
     });
   };
-  const updateTask = (idList: number, id: number, newTask: Task) => {
+  const updateTask = (idList: string, id: string, newTask: Task) => {
     dispatch({
       type: "UPDATE_TASK",
       payload: { idList: idList, id: id, task: newTask },
     });
   };
-  const updateStatus = (idList: number, id: number, status: string) => {
+  const updateStatus = (idList: string, id: string, status: string) => {
     dispatch({
       type: "UPDATE_STATUS",
       payload: { idList: idList, id: id, status: status },
     });
   };
-  const deleteTask = (idList: number, id: number) => {
+  const deleteTask = (idList: string, id: string) => {
     dispatch({ type: "DELETE_TASK", payload: { idList: idList, id: id } });
   };
   const replaceTaskList = (taskList: TaskState) => {

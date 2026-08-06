@@ -5,6 +5,7 @@ import { nunito } from "@/components/fonts";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import TaskProvider from "@/context/taskProvider";
+import FilterProvider from "@/context/filterProvider";
 
 export const metadata: Metadata = {
   title: "Clone Trello",
@@ -18,24 +19,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`overflow-hidden" ${nunito.className}`}>
+      <body className={`overflow-hidden ${nunito.className}`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="ligth"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
           <TaskProvider>
-            <Navbar />
-            {children}
-            {/* ESTA LA IMG POR EL CAPACITOR */}
-            <img
-              src={"/images/background.jpg"}
-              width={1920}
-              height={1080}
-              alt="background"
-              className="fixed w-screen h-screen object-cover  top-0 -z-10 opacity-45"
-            />{" "}
+            <FilterProvider>
+              <Navbar />
+              {children}
+              {/* ESTA LA IMG POR EL CAPACITOR */}
+              <img
+                src={"/images/background.jpg"}
+                width={1920}
+                height={1080}
+                alt="background"
+                className="fixed w-screen h-screen object-cover  top-0 -z-10 opacity-45"
+              />{" "}
+            </FilterProvider>
           </TaskProvider>
         </ThemeProvider>
       </body>

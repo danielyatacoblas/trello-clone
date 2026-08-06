@@ -2,17 +2,17 @@ import { Task, TaskState } from "@/interfaces/interfaces";
 
 type TaskAction =
   | { type: "CREATE_LIST"; payload: string }
-  | { type: "DELETE_LIST"; payload: number }
-  | { type: "CREATE_TASK"; payload: { idList: number; task: Task } }
+  | { type: "DELETE_LIST"; payload: string }
+  | { type: "CREATE_TASK"; payload: { idList: string; task: Task } }
   | {
       type: "UPDATE_TASK";
-      payload: { idList: number; id: number; task: Partial<Task> };
+      payload: { idList: string; id: string; task: Partial<Task> };
     }
   | {
       type: "UPDATE_STATUS";
-      payload: { idList: number; id: number; status: string };
+      payload: { idList: string; id: string; status: string };
     }
-  | { type: "DELETE_TASK"; payload: { idList: number; id: number } }
+  | { type: "DELETE_TASK"; payload: { idList: string; id: string } }
   | { type: "REPLACE"; payload: TaskState };
 
 export const taskReducer = (
@@ -26,7 +26,7 @@ export const taskReducer = (
         taskItems: [
           ...state.taskItems,
           {
-            id: state.taskItems.length + 1,
+            id: crypto.randomUUID(),
             name: action.payload,
             taskList: [],
           },
@@ -50,7 +50,7 @@ export const taskReducer = (
                 ...taskItems,
                 taskList: [
                   ...taskItems.taskList,
-                  { ...action.payload.task, id: taskItems.taskList.length + 1 },
+                  { ...action.payload.task, id: crypto.randomUUID() },
                 ],
               }
             : taskItems
