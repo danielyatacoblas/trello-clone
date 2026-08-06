@@ -18,10 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`overflow-hidden" ${nunito.className}`}>
+      <body className={`overflow-hidden ${nunito.className}`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="ligth"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
