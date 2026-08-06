@@ -34,13 +34,15 @@ type DialogTaskProps = {
   isEdit: boolean;
   btn: React.ReactNode;
   task?: Task;
-  idList: number;
+  idList: string;
 };
 
 const taskSchema = z.object({
-  id: z.number().optional(),
-  description: z.string().min(5, { message: "Description is required" }),
-  status: z.string().min(1, { message: "Status is required" }),
+  id: z.string().optional(),
+  description: z
+    .string()
+    .min(5, { message: "La descripción debe tener al menos 5 caracteres" }),
+  status: z.string().min(1, { message: "El estado es obligatorio" }),
 });
 
 export default function DialogTask({
@@ -63,7 +65,7 @@ export default function DialogTask({
 
   const onSubmit = (data: Task) => {
     setOpen(false);
-    isEdit ? updateTask(idList, task?.id ?? 0, data) : createTask(idList, data);
+    isEdit ? updateTask(idList, task?.id ?? "", data) : createTask(idList, data);
     form.reset();
   };
 
@@ -73,7 +75,7 @@ export default function DialogTask({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-center">
-            {isEdit ? "Edit Task" : "Add Task"}
+            {isEdit ? "Editar tarea" : "Agregar tarea"}
           </DialogTitle>
         </DialogHeader>
         <div className="flex justify-center">
@@ -90,7 +92,7 @@ export default function DialogTask({
                     <FormControl>
                       <Input
                         className="border-gray-400"
-                        placeholder="Description"
+                        placeholder="Descripción"
                         {...field}
                       />
                     </FormControl>
@@ -109,13 +111,13 @@ export default function DialogTask({
                         value={field.value}
                       >
                         <SelectTrigger className="w-full border-gray-400">
-                          <SelectValue placeholder="Select a status" />
+                          <SelectValue placeholder="Selecciona un estado" />
                         </SelectTrigger>
                         <SelectContent className="z-[999]">
                           <SelectGroup>
-                            <SelectItem value="to do">To Do</SelectItem>
-                            <SelectItem value="process">In Progress</SelectItem>
-                            <SelectItem value="completed">Completed</SelectItem>
+                            <SelectItem value="to do">Por hacer</SelectItem>
+                            <SelectItem value="process">En proceso</SelectItem>
+                            <SelectItem value="completed">Completado</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -125,7 +127,7 @@ export default function DialogTask({
                 )}
               />
               <Button className="w-full" type="submit">
-                Confirm
+                Confirmar
               </Button>
             </form>
           </Form>

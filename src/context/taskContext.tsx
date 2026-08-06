@@ -5,11 +5,11 @@ import { createContext } from "react";
 type TaskStateprops = {
   taskState: TaskState;
   createTaskList: (nameList: string) => void;
-  deleteTaskList: (id: number) => void;
-  createTask: (idList: number, newTask: Task) => void;
-  updateTask: (idList: number, id: number, newTask: Task) => void;
-  updateStatus: (idList: number, id: number, status: string) => void;
-  deleteTask: (idList: number, id: number) => void;
+  deleteTaskList: (id: string) => void;
+  createTask: (idList: string, newTask: Task) => void;
+  updateTask: (idList: string, id: string, newTask: Task) => void;
+  updateStatus: (idList: string, id: string, status: string) => void;
+  deleteTask: (idList: string, id: string) => void;
   replaceTaskList: (taskList: TaskState) => void;
 };
 

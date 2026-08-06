@@ -34,12 +34,14 @@ export default function AddListTask({ createTaskList }: props) {
       <DialogTrigger asChild>
         <Button className="flex gap-2 font-semibold ">
           <PlusCircledIcon />
-          Add Task List
+          Agregar lista
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-center">Add List Task</DialogTitle>
+          <DialogTitle className="text-center">
+            Agregar lista de tareas
+          </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
@@ -48,7 +50,7 @@ export default function AddListTask({ createTaskList }: props) {
               value={listName}
               onChange={onChange}
               className="border-gray-500 col-span-4 text-foreground"
-              placeholder="List name"
+              placeholder="Nombre de la lista"
               required
             />
           </div>
@@ -57,11 +59,11 @@ export default function AddListTask({ createTaskList }: props) {
           {listName ? (
             <DialogClose>
               <Button type="submit" onClick={submitList}>
-                Save changes
+                Guardar
               </Button>
             </DialogClose>
           ) : (
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Guardar</Button>
           )}
         </DialogFooter>
       </DialogContent>

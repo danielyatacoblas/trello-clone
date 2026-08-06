@@ -14,7 +14,7 @@ import { DeleteTask } from "./DeleteTask";
 import DialogTask from "./DialogTask";
 import useTasks from "@/hooks/useTasks";
 type props = {
-  idList: number;
+  idList: string;
   task: Task;
 };
 
@@ -50,12 +50,14 @@ export default function TaskItem({ idList, task }: props) {
               value={task.status}
               onValueChange={handleStatus}
             >
-              <DropdownMenuRadioItem value="to do">to do</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="to do">
+                Por hacer
+              </DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="process">
-                process
+                En proceso
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="completed">
-                completed
+                Completado
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>

@@ -1,13 +1,13 @@
 export type status = "process" | "completed" | "to do";
 
 export interface Task {
-  id: number;
+  id: string;
   description: string;
   status: string;
 }
 
 export interface NameList {
-  id: number;
+  id: string;
   name: string;
   taskList: Task[];
 }

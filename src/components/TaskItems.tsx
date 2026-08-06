@@ -14,7 +14,7 @@ export default function TaskItems({ tasks }: props) {
     <div className="flex flex-col justify-start items-center  gap-4 p-4 min-w-[280px] h-auto min-h-[300px]  ">
       <span className="flex items-center font-semibold text-xl underline select-none w-full">
         <div className="flex-1 text-center">
-          {tasks.name === "" ? "No name" : tasks.name}
+          {tasks.name === "" ? "Sin nombre" : tasks.name}
         </div>
         <p className="">
           <DeleteTaskList  id={tasks.id} name={tasks.name} />
@@ -29,7 +29,7 @@ export default function TaskItems({ tasks }: props) {
             <DialogTask
               idList={tasks.id}
               isEdit={false}
-              btn={<Button>Add Task</Button>}
+              btn={<Button>Agregar tarea</Button>}
             />
           </div>
         </div>
