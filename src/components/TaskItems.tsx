@@ -1,17 +1,31 @@
+"use client";
 import { NameList } from "@/interfaces/interfaces";
-import TaskItem from "./TaskItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
 import DialogTask from "./DialogTask";
 import { DeleteTaskList } from "./DeleteTaskList";
+import SortableTaskItem from "./SortableTaskItem";
+import { useDroppable } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 type props = {
   tasks: NameList;
 };
 
 export default function TaskItems({ tasks }: props) {
+  const { setNodeRef } = useDroppable({
+    id: tasks.id,
+    data: { type: "list" },
+  });
+
   return (
-    <div className="flex flex-col justify-start items-center  gap-4 p-4 min-w-[280px] h-auto min-h-[300px]  ">
+    <div
+      ref={setNodeRef}
+      className="flex flex-col justify-start items-center  gap-4 p-4 min-w-[280px] h-auto min-h-[300px]  "
+    >
       <span className="flex items-center font-semibold text-xl underline select-none w-full">
         <div className="flex-1 text-center">
           {tasks.name === "" ? "Sin nombre" : tasks.name}
@@ -23,9 +37,14 @@ export default function TaskItems({ tasks }: props) {
       <ScrollArea className="rounded-md max-h-[80vh] h-auto w-full">
         <div className="p-1 h-auto">
           <div className="flex flex-col gap-4 p-2 h-auto">
-            {tasks.taskList.map((task) => (
-              <TaskItem idList={tasks.id} key={task.id} task={task} />
-            ))}
+            <SortableContext
+              items={tasks.taskList.map((task) => task.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {tasks.taskList.map((task) => (
+                <SortableTaskItem idList={tasks.id} key={task.id} task={task} />
+              ))}
+            </SortableContext>
             <DialogTask
               idList={tasks.id}
               isEdit={false}
