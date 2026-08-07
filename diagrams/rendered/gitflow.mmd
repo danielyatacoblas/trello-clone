@@ -1,38 +1,63 @@
-flowchart LR
-  subgraph trabajo["Ramas de trabajo"]
-    direction TB
-    feature["feature/*<br/>funcionalidad nueva"]
-    fix["fix/*<br/>corrección de defecto"]
-    chore["chore/*<br/>mantenimiento y tooling"]
-    docs["docs/*<br/>documentación y capturas"]
-  end
-  subgraph integracion["Integración"]
-    direction TB
-    develop["develop<br/>integra el trabajo antes de publicar"]
-  end
-  subgraph verificacion["Verificación"]
-    direction TB
-    build["npm run build<br/>compilación de producción"]
-    types["npm run typecheck<br/>tsc --noEmit"]
-    lint["npm run lint<br/>eslint"]
-  end
-  subgraph publicacion["Publicación"]
-    direction TB
-    main["main<br/>solo recibe merges desde develop"]
-  end
-  subgraph distribucion["Distribución"]
-    direction TB
-    github["GitHub<br/>historia con un único autor"]
-    release["Azure Static Web Apps<br/>despliegue automático desde main"]
-  end
-  feature -->|"merge --no-ff"| develop
-  fix -->|"merge --no-ff"| develop
-  chore -->|"merge --no-ff"| develop
-  docs -->|"merge --no-ff"| develop
-  develop -->|"se verifica"| build
-  build -->|"y además"| types
-  types -->|"y además"| lint
-  lint -->|"merge --no-ff"| main
-  main -->|"push"| github
-  github -->|"publica"| release
-  build -.->|"si falla, se corrige"| develop
+gitGraph
+   commit id: "Initial commit from Create Next App"
+   commit id: "+6 commits mas"
+   commit id: "ci: add Azure Static Web Apps workfl..."
+   branch develop
+   branch fix/ui-bugs
+   commit id: "fix: correct theme typo and stray qu..."
+   commit id: "fix: generate ids with crypto.random..."
+   commit id: "+3 commits mas"
+   checkout develop
+   merge fix/ui-bugs
+   branch feature/drag-and-drop
+   commit id: "feat: add dnd-kit dependencies for d..."
+   commit id: "feat: implement drag and drop for ca..."
+   checkout develop
+   merge feature/drag-and-drop
+   branch feature/search-and-filters
+   commit id: "feat: add filter context for card se..."
+   commit id: "feat: add real-time card search inpu..."
+   commit id: "+1 commits mas"
+   checkout develop
+   merge feature/search-and-filters
+   branch fix/azure-deploy-output
+   commit id: "ci: point Azure Static Web Apps to N..."
+   checkout develop
+   merge fix/azure-deploy-output
+   branch docs/readme-and-license
+   commit id: "docs: add proprietary license"
+   commit id: "docs: add board screenshots (light, ..."
+   commit id: "+1 commits mas (2)"
+   checkout develop
+   merge docs/readme-and-license
+   checkout main
+   merge develop tag: "portfolio release"
+   checkout develop
+   branch chore/remove-emojis
+   commit id: "docs: remove emojis from README head..."
+   checkout develop
+   merge chore/remove-emojis
+   branch feature/ui-polish
+   commit id: "feat: replace photo background and r..."
+   checkout develop
+   merge feature/ui-polish
+   branch docs/screenshots-ui-polish
+   commit id: "docs: refresh screenshots after the ..."
+   checkout develop
+   merge docs/screenshots-ui-polish
+   checkout main
+   merge develop tag: "portfolio release"
+   checkout develop
+   branch chore/harden-gitignore
+   commit id: "chore: harden gitignore against comm..."
+   checkout develop
+   merge chore/harden-gitignore
+   checkout main
+   merge develop tag: "gitignore hardening"
+   checkout develop
+   branch docs/diagrams
+   commit id: "docs: add generated architecture and..."
+   checkout develop
+   merge docs/diagrams
+   checkout main
+   merge develop tag: "diagrams"
