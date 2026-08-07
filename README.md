@@ -51,6 +51,13 @@ flowchart LR
 - **Filtros**: contexto separado (`FilterContext`) porque el buscador vive en el layout y el tablero en la página; el filtrado es 100% derivado y no altera los datos guardados.
 - **IDs**: `crypto.randomUUID()` (con normalización de IDs numéricos antiguos al cargar).
 
+## Decisiones de interfaz
+
+- **Fondo sobrio en lugar de fotografía.** El tablero usaba una foto de paisaje a pantalla completa con `opacity-45`: competía visualmente con las tarjetas y hacía que el contraste del texto dependiera de la zona de la imagen que quedara detrás. Se sustituyó por un degradado lineal construido con tokens del tema (`--app-gradient-from` / `--app-gradient-to`), distinto en claro y en oscuro. Así el contraste es predecible y medible, y el archivo de imagen deja de viajar en el bundle estático.
+- **Tres superficies, no una.** Fondo (degradado) para la página, `--panel` para la columna de cada lista y `--card` para la tarjeta. En modo oscuro la tarjeta es más clara que el panel y el panel más claro que el fondo, de modo que la jerarquía se lee sin depender de la sombra.
+- **Texto de tarjeta sin cortes feos.** Antes la tarjeta tenía alto máximo fijo y el texto se recortaba a media línea. Ahora la tarjeta crece con su contenido, el texto parte por palabra (`break-words`) y solo las descripciones muy largas se limitan con `line-clamp`, que corta en un salto de línea; el texto completo queda accesible en el `title`.
+- **Contraste AA verificado** en ambos temas para texto y controles: texto de tarjeta 19.8:1 en claro y 10.1:1 en oscuro, texto sobre panel por encima de 6:1 en ambos, y todos los controles con estado `hover` y `focus-visible` explícito.
+
 ## Ejecución local
 
 ```bash

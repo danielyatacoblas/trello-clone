@@ -8,9 +8,9 @@ export default function Navbar() {
   const { search, setSearch } = useFilters();
 
   return (
-    <nav className="sticky right-0 left-0 flex items-center justify-between gap-4 px-12 py-4 shadow-2xl">
-      <h2 className="text-2xl font-semibold">TaskList</h2>
-      <div className="flex items-center gap-8">
+    <nav className="sticky top-0 right-0 left-0 z-20 flex items-center justify-between gap-4 border-b border-border bg-card/90 px-6 py-4 text-card-foreground shadow-sm backdrop-blur-md sm:px-12">
+      <h1 className="text-2xl font-bold tracking-tight">TaskList</h1>
+      <div className="flex items-center gap-6 sm:gap-8">
         <div className="relative w-[180px] sm:w-[260px]">
           <MagnifyingGlassIcon className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -18,7 +18,7 @@ export default function Navbar() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar tarjetas..."
-            className="pl-8 border-gray-400"
+            className="border-border bg-background pl-8"
             aria-label="Buscar tarjetas"
           />
         </div>

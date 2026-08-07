@@ -48,7 +48,15 @@ export default function Board() {
   }, []);
 
   if (!hydrated) {
-    return <div className="animate-spin"><ReloadIcon/></div>;
+    return (
+      <div
+        role="status"
+        aria-label="Cargando tablero"
+        className="flex w-full justify-center py-10 text-muted-foreground"
+      >
+        <ReloadIcon className="h-6 w-6 animate-spin" />
+      </div>
+    );
   }
 
   // Filtrado derivado del estado (no modifica lo persistido en localStorage)
@@ -167,19 +175,22 @@ export default function Board() {
             onClick={() =>
               setStatusFilter(statusFilter === chip.value ? null : chip.value)
             }
-            className={`flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold transition-colors ${
+            aria-pressed={statusFilter === chip.value}
+            className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
               statusFilter === chip.value
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-background border-gray-400 hover:bg-accent"
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card text-card-foreground hover:bg-accent hover:text-accent-foreground"
             }`}
           >
-            <span className={`w-2.5 h-2.5 rounded-full ${chip.color}`} />
+            <span
+              className={`h-2.5 w-2.5 rounded-full ring-1 ring-black/10 dark:ring-white/20 ${chip.color}`}
+            />
             {chip.label}
           </button>
         ))}
       </div>
-      <section className="flex flex-col justify-start items-start w-full h-auto max-h-[80vh] overflow-x-auto overflow-y-hidden">
-        <div className="flex gap-2 p-1">
+      <section className="flex h-auto max-h-[80vh] w-full flex-col items-start justify-start overflow-x-auto overflow-y-hidden pb-2">
+        <div className="flex items-start gap-4 p-1">
             {taskState.taskItems.map((tasks) => (
               <TaskItems
                 key={tasks.id}
@@ -191,7 +202,7 @@ export default function Board() {
       </section>
       <DragOverlay>
         {activeTask && activeListId ? (
-          <div className="rotate-3 shadow-2xl cursor-grabbing">
+          <div className="w-[264px] rotate-3 cursor-grabbing rounded-lg shadow-2xl">
             <TaskItem idList={activeListId} task={activeTask} />
           </div>
         ) : null}

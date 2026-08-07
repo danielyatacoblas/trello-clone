@@ -91,7 +91,7 @@ export default function DialogTask({
                   <FormItem>
                     <FormControl>
                       <Input
-                        className="border-gray-400"
+                        className="border-input"
                         placeholder="Descripción"
                         {...field}
                       />
@@ -110,7 +110,7 @@ export default function DialogTask({
                         onValueChange={field.onChange}
                         value={field.value}
                       >
-                        <SelectTrigger className="w-full border-gray-400">
+                        <SelectTrigger className="w-full border-input">
                           <SelectValue placeholder="Selecciona un estado" />
                         </SelectTrigger>
                         <SelectContent className="z-[999]">

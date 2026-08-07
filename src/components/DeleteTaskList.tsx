@@ -22,7 +22,16 @@ export function DeleteTaskList({ id, name }: props) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Cross2Icon />
+        {/* Un botón real (y no el icono suelto) para que sea alcanzable con
+            teclado y tenga estados hover/focus visibles. */}
+        <button
+          type="button"
+          aria-label={`Eliminar la lista ${name || "sin nombre"}`}
+          title="Eliminar lista"
+          className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-panel-foreground/70 transition-colors hover:bg-destructive hover:text-destructive-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <Cross2Icon />
+        </button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
