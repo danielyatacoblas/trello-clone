@@ -27,39 +27,37 @@ export default function TaskItems({ tasks, visibleTasks }: props) {
   return (
     <div
       ref={setNodeRef}
-      className="flex flex-col justify-start items-center  gap-4 p-4 min-w-[280px] h-auto min-h-[300px]  "
+      className="flex h-auto w-[288px] shrink-0 flex-col gap-3 rounded-xl border border-border bg-panel/85 p-3 text-panel-foreground shadow-sm"
     >
-      <span className="flex items-center font-semibold text-xl underline select-none w-full">
-        <div className="flex-1 text-center">
-          {tasks.name === "" ? "Sin nombre" : tasks.name}{" "}
+      <header className="flex select-none items-center gap-2">
+        <h2 className="flex min-w-0 flex-1 items-baseline gap-2 text-lg font-bold tracking-tight">
+          <span className="truncate" title={tasks.name || "Sin nombre"}>
+            {tasks.name === "" ? "Sin nombre" : tasks.name}
+          </span>
           <span
-            className="no-underline text-sm font-normal rounded-full bg-primary text-primary-foreground px-2 py-0.5 align-middle"
-            title="Tarjetas en la lista"
+            className="shrink-0 rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground"
+            title="Tarjetas visibles en la lista"
           >
             {visible === total ? total : `${visible}/${total}`}
           </span>
-        </div>
-        <p className="">
-          <DeleteTaskList  id={tasks.id} name={tasks.name} />
-        </p>
-      </span>
-      <ScrollArea className="rounded-md max-h-[80vh] h-auto w-full">
-        <div className="p-1 h-auto">
-          <div className="flex flex-col gap-4 p-2 h-auto">
-            <SortableContext
-              items={visibleTasks.map((task) => task.id)}
-              strategy={verticalListSortingStrategy}
-            >
-              {visibleTasks.map((task) => (
-                <SortableTaskItem idList={tasks.id} key={task.id} task={task} />
-              ))}
-            </SortableContext>
-            <DialogTask
-              idList={tasks.id}
-              isEdit={false}
-              btn={<Button>Agregar tarea</Button>}
-            />
-          </div>
+        </h2>
+        <DeleteTaskList id={tasks.id} name={tasks.name} />
+      </header>
+      <ScrollArea className="h-auto max-h-[70vh] w-full rounded-md">
+        <div className="flex h-auto flex-col gap-3 pb-1 pr-2">
+          <SortableContext
+            items={visibleTasks.map((task) => task.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {visibleTasks.map((task) => (
+              <SortableTaskItem idList={tasks.id} key={task.id} task={task} />
+            ))}
+          </SortableContext>
+          <DialogTask
+            idList={tasks.id}
+            isEdit={false}
+            btn={<Button className="w-full">Agregar tarea</Button>}
+          />
         </div>
       </ScrollArea>
     </div>

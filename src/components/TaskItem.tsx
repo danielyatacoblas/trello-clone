@@ -21,10 +21,20 @@ type props = {
 export default function TaskItem({ idList, task }: props) {
   const { updateStatus } = useTasks();
 
+  const statusLabel =
+    task.status === "to do"
+      ? "Por hacer"
+      : task.status === "completed"
+      ? "Completado"
+      : "En proceso";
+
   const currentStatus = (
-    <span
+    <button
+      type="button"
       id="statusTooltip"
-      className={`w-4 h-4 rounded-full ${
+      aria-label={`Estado: ${statusLabel}. Cambiar estado`}
+      title={`Estado: ${statusLabel}`}
+      className={`w-4 h-4 shrink-0 rounded-full ring-1 ring-black/10 transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card dark:ring-white/20 ${
         task.status === "to do"
           ? "bg-red-500"
           : task.status === "completed"
@@ -38,11 +48,20 @@ export default function TaskItem({ idList, task }: props) {
   };
 
   return (
-    <div className="flex justify-between items-center px-1 py-2 shadow-lg rounded-lg bg-background gap-2 w-[220px] max-h-[80px] ">
-      <p className="text-sm overflow-y-auto max-h-[70px] ">
+    <div className="group flex w-[264px] items-start justify-between gap-3 rounded-lg border border-border bg-card p-3 text-card-foreground shadow-sm transition-shadow duration-150 hover:shadow-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 focus-within:ring-offset-panel">
+      {/*
+        La tarjeta crece con su contenido: sin alto máximo el texto ya no se
+        parte a media línea. Para descripciones muy largas, line-clamp corta
+        en el salto de línea (con puntos suspensivos limpios) y el texto
+        completo queda disponible en el title.
+      */}
+      <p
+        title={task.description}
+        className="min-w-0 flex-1 whitespace-pre-line break-words text-sm leading-snug line-clamp-6"
+      >
         {task.description}
       </p>
-      <div className="flex justify-end gap-2 items-center">
+      <div className="flex shrink-0 items-center justify-end gap-2 pt-0.5">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>{currentStatus}</DropdownMenuTrigger>
           <DropdownMenuContent>
