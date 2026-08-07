@@ -100,9 +100,80 @@ de modo que la documentacion no se desincroniza del proyecto.
 
 ![Flujo de la aplicacion](diagrams/rendered/flujo.svg)
 
-### Modelo de ramas
+### Flujo de trabajo con Git
 
-![Gitflow](diagrams/rendered/gitflow.svg)
+El repositorio sigue Git Flow: `main` siempre desplegable, `develop` como
+integracion, y una rama por cambio. Los merges son `--no-ff` para que cada
+funcionalidad quede como un bloque legible en el historial, y cada version
+llega a `main` etiquetada.
+
+Este es el historial real del repositorio, no un ejemplo:
+
+```mermaid
+gitGraph
+   commit id: "Initial commit from Create Next App"
+   commit id: "+6 commits mas"
+   commit id: "ci: add Azure Static Web Apps workfl..."
+   branch develop
+   branch fix/ui-bugs
+   commit id: "fix: correct theme typo and stray qu..."
+   commit id: "fix: generate ids with crypto.random..."
+   commit id: "+3 commits mas"
+   checkout develop
+   merge fix/ui-bugs
+   branch feature/drag-and-drop
+   commit id: "feat: add dnd-kit dependencies for d..."
+   commit id: "feat: implement drag and drop for ca..."
+   checkout develop
+   merge feature/drag-and-drop
+   branch feature/search-and-filters
+   commit id: "feat: add filter context for card se..."
+   commit id: "feat: add real-time card search inpu..."
+   commit id: "+1 commits mas"
+   checkout develop
+   merge feature/search-and-filters
+   branch fix/azure-deploy-output
+   commit id: "ci: point Azure Static Web Apps to N..."
+   checkout develop
+   merge fix/azure-deploy-output
+   branch docs/readme-and-license
+   commit id: "docs: add proprietary license"
+   commit id: "docs: add board screenshots (light, ..."
+   commit id: "+1 commits mas (2)"
+   checkout develop
+   merge docs/readme-and-license
+   checkout main
+   merge develop tag: "portfolio release"
+   checkout develop
+   branch chore/remove-emojis
+   commit id: "docs: remove emojis from README head..."
+   checkout develop
+   merge chore/remove-emojis
+   branch feature/ui-polish
+   commit id: "feat: replace photo background and r..."
+   checkout develop
+   merge feature/ui-polish
+   branch docs/screenshots-ui-polish
+   commit id: "docs: refresh screenshots after the ..."
+   checkout develop
+   merge docs/screenshots-ui-polish
+   checkout main
+   merge develop tag: "portfolio release"
+   checkout develop
+   branch chore/harden-gitignore
+   commit id: "chore: harden gitignore against comm..."
+   checkout develop
+   merge chore/harden-gitignore
+   checkout main
+   merge develop tag: "gitignore hardening"
+   checkout develop
+   branch docs/diagrams
+   commit id: "docs: add generated architecture and..."
+   checkout develop
+   merge docs/diagrams
+   checkout main
+   merge develop tag: "diagrams"
+```
 
 Regenerar despues de editar la especificacion:
 
