@@ -49,7 +49,7 @@ export default function AddListTask({ createTaskList }: props) {
               id="name"
               value={listName}
               onChange={onChange}
-              className="border-gray-500 col-span-4 text-foreground"
+              className="border-input col-span-4 text-foreground"
               placeholder="Nombre de la lista"
               required
             />
