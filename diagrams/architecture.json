@@ -1,0 +1,462 @@
+{
+  "schema_version": 1,
+  "project": "TaskList",
+  "views": {
+    "gitflow": {
+      "name": "Gitflow",
+      "subtitle": "Modelo de ramas: el trabajo nace de develop, se verifica y solo entonces llega a main.",
+      "footer": "Convención: ramas cortas por propósito, merges --no-ff para conservar la traza, commits convencionales en inglés.",
+      "legend": [
+        {
+          "status": "FEATURE",
+          "label": "trabajo"
+        },
+        {
+          "status": "DEVELOP",
+          "label": "integracion"
+        },
+        {
+          "status": "MAIN",
+          "label": "publicado"
+        }
+      ],
+      "groups": [
+        {
+          "id": "trabajo",
+          "title": "Ramas de trabajo",
+          "x": 48,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#ede9fe"
+        },
+        {
+          "id": "integracion",
+          "title": "Integración",
+          "x": 396,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#dbeafe"
+        },
+        {
+          "id": "verificacion",
+          "title": "Verificación",
+          "x": 744,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#fef3c7"
+        },
+        {
+          "id": "publicacion",
+          "title": "Publicación",
+          "x": 1092,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#dcfce7"
+        },
+        {
+          "id": "distribucion",
+          "title": "Distribución",
+          "x": 1440,
+          "y": 105,
+          "width": 432,
+          "height": 835,
+          "color": "#e2e8f0"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "feature",
+          "label": "feature/*",
+          "detail": "funcionalidad nueva",
+          "x": 90,
+          "y": 150,
+          "group": "trabajo",
+          "kind": "branch",
+          "status": "FEATURE"
+        },
+        {
+          "id": "fix",
+          "label": "fix/*",
+          "detail": "corrección de defecto",
+          "x": 90,
+          "y": 345,
+          "group": "trabajo",
+          "kind": "branch",
+          "status": "FIX"
+        },
+        {
+          "id": "chore",
+          "label": "chore/*",
+          "detail": "mantenimiento y tooling",
+          "x": 90,
+          "y": 540,
+          "group": "trabajo",
+          "kind": "branch",
+          "status": "DOCS"
+        },
+        {
+          "id": "docs",
+          "label": "docs/*",
+          "detail": "documentación y capturas",
+          "x": 90,
+          "y": 735,
+          "group": "trabajo",
+          "kind": "branch",
+          "status": "DOCS"
+        },
+        {
+          "id": "develop",
+          "label": "develop",
+          "detail": "integra el trabajo antes de publicar",
+          "x": 438,
+          "y": 420,
+          "group": "integracion",
+          "kind": "merge",
+          "status": "DEVELOP"
+        },
+        {
+          "id": "build",
+          "label": "npm run build",
+          "detail": "compilación de producción",
+          "x": 786,
+          "y": 250,
+          "group": "verificacion",
+          "kind": "check",
+          "status": "DOCS"
+        },
+        {
+          "id": "types",
+          "label": "npm run typecheck",
+          "detail": "tsc --noEmit",
+          "x": 786,
+          "y": 445,
+          "group": "verificacion",
+          "kind": "check",
+          "status": "DOCS"
+        },
+        {
+          "id": "lint",
+          "label": "npm run lint",
+          "detail": "eslint",
+          "x": 786,
+          "y": 640,
+          "group": "verificacion",
+          "kind": "check",
+          "status": "DOCS"
+        },
+        {
+          "id": "main",
+          "label": "main",
+          "detail": "solo recibe merges desde develop",
+          "x": 1134,
+          "y": 420,
+          "group": "publicacion",
+          "kind": "release",
+          "status": "MAIN"
+        },
+        {
+          "id": "github",
+          "label": "GitHub",
+          "detail": "historia con un único autor",
+          "x": 1482,
+          "y": 345,
+          "group": "distribucion",
+          "kind": "release",
+          "status": "MAIN"
+        },
+        {
+          "id": "release",
+          "label": "Azure Static Web Apps",
+          "detail": "despliegue automático desde main",
+          "x": 1482,
+          "y": 540,
+          "group": "distribucion",
+          "kind": "release",
+          "status": "MAIN"
+        }
+      ],
+      "edges": [
+        {
+          "from": "feature",
+          "to": "develop",
+          "label": "merge --no-ff",
+          "style": "solid"
+        },
+        {
+          "from": "fix",
+          "to": "develop",
+          "label": "merge --no-ff",
+          "style": "solid"
+        },
+        {
+          "from": "chore",
+          "to": "develop",
+          "label": "merge --no-ff",
+          "style": "solid"
+        },
+        {
+          "from": "docs",
+          "to": "develop",
+          "label": "merge --no-ff",
+          "style": "solid"
+        },
+        {
+          "from": "develop",
+          "to": "build",
+          "label": "se verifica",
+          "style": "solid"
+        },
+        {
+          "from": "build",
+          "to": "types",
+          "label": "y además",
+          "style": "solid"
+        },
+        {
+          "from": "types",
+          "to": "lint",
+          "label": "y además",
+          "style": "solid"
+        },
+        {
+          "from": "lint",
+          "to": "main",
+          "label": "merge --no-ff",
+          "style": "solid"
+        },
+        {
+          "from": "main",
+          "to": "github",
+          "label": "push",
+          "style": "solid"
+        },
+        {
+          "from": "github",
+          "to": "release",
+          "label": "publica",
+          "style": "solid"
+        },
+        {
+          "from": "build",
+          "to": "develop",
+          "label": "si falla, se corrige",
+          "style": "dashed"
+        }
+      ]
+    },
+    "flujo": {
+      "name": "Flujo de la aplicación",
+      "subtitle": "Tablero sin backend: el estado vive en el navegador y se persiste en cada cambio.",
+      "footer": "Export estático de Next.js: el mismo build alimenta el sitio web y la app Android empaquetada con Capacitor.",
+      "legend": [
+        {
+          "status": "IMPLEMENTED",
+          "label": "implementado"
+        },
+        {
+          "status": "LOCAL",
+          "label": "navegador"
+        }
+      ],
+      "groups": [
+        {
+          "id": "persona",
+          "title": "Personas",
+          "x": 48,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#e2e8f0"
+        },
+        {
+          "id": "interfaz",
+          "title": "Interfaz",
+          "x": 396,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#ede9fe"
+        },
+        {
+          "id": "estado",
+          "title": "Estado",
+          "x": 744,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#dbeafe"
+        },
+        {
+          "id": "persistencia",
+          "title": "Persistencia",
+          "x": 1092,
+          "y": 105,
+          "width": 300,
+          "height": 835,
+          "color": "#dcfce7"
+        },
+        {
+          "id": "entrega",
+          "title": "Entrega",
+          "x": 1440,
+          "y": 105,
+          "width": 432,
+          "height": 835,
+          "color": "#fef3c7"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "usuario",
+          "label": "Usuario",
+          "detail": "organiza sus tareas",
+          "x": 90,
+          "y": 420,
+          "group": "persona",
+          "kind": "actor",
+          "status": "EXTERNAL"
+        },
+        {
+          "id": "navbar",
+          "label": "Barra superior",
+          "detail": "búsqueda y tema claro u oscuro",
+          "x": 438,
+          "y": 180,
+          "group": "interfaz",
+          "kind": "api",
+          "status": "IMPLEMENTED"
+        },
+        {
+          "id": "tablero",
+          "label": "Tablero",
+          "detail": "listas y tarjetas",
+          "x": 438,
+          "y": 420,
+          "group": "interfaz",
+          "kind": "api",
+          "status": "IMPLEMENTED"
+        },
+        {
+          "id": "dnd",
+          "label": "Arrastrar y soltar",
+          "detail": "dnd-kit, también por teclado",
+          "x": 438,
+          "y": 660,
+          "group": "interfaz",
+          "kind": "queue",
+          "status": "IMPLEMENTED"
+        },
+        {
+          "id": "reducer",
+          "label": "Reducer y contexto",
+          "detail": "acciones de listas y tarjetas",
+          "x": 786,
+          "y": 250,
+          "group": "estado",
+          "kind": "queue",
+          "status": "IMPLEMENTED"
+        },
+        {
+          "id": "filtros",
+          "label": "Filtros derivados",
+          "detail": "búsqueda y estado, sin tocar los datos",
+          "x": 786,
+          "y": 620,
+          "group": "estado",
+          "kind": "queue",
+          "status": "IMPLEMENTED"
+        },
+        {
+          "id": "storage",
+          "label": "localStorage",
+          "detail": "se guarda en cada cambio",
+          "x": 1134,
+          "y": 420,
+          "group": "persistencia",
+          "kind": "database",
+          "status": "LOCAL"
+        },
+        {
+          "id": "web",
+          "label": "Sitio estático",
+          "detail": "export de Next.js a Azure",
+          "x": 1482,
+          "y": 300,
+          "group": "entrega",
+          "kind": "release",
+          "status": "IMPLEMENTED"
+        },
+        {
+          "id": "android",
+          "label": "App Android",
+          "detail": "empaquetada con Capacitor",
+          "x": 1482,
+          "y": 560,
+          "group": "entrega",
+          "kind": "release",
+          "status": "IMPLEMENTED"
+        }
+      ],
+      "edges": [
+        {
+          "from": "usuario",
+          "to": "tablero",
+          "label": "interactúa",
+          "style": "solid"
+        },
+        {
+          "from": "navbar",
+          "to": "filtros",
+          "label": "busca",
+          "style": "solid"
+        },
+        {
+          "from": "tablero",
+          "to": "reducer",
+          "label": "acciones",
+          "style": "solid"
+        },
+        {
+          "from": "dnd",
+          "to": "reducer",
+          "label": "reordena",
+          "style": "solid"
+        },
+        {
+          "from": "filtros",
+          "to": "tablero",
+          "label": "vista filtrada",
+          "style": "dashed"
+        },
+        {
+          "from": "reducer",
+          "to": "storage",
+          "label": "persiste",
+          "style": "solid"
+        },
+        {
+          "from": "storage",
+          "to": "reducer",
+          "label": "restaura al abrir",
+          "style": "dashed"
+        },
+        {
+          "from": "reducer",
+          "to": "web",
+          "label": "build",
+          "style": "solid"
+        },
+        {
+          "from": "web",
+          "to": "android",
+          "label": "sincroniza",
+          "style": "solid"
+        }
+      ]
+    }
+  }
+}

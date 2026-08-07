@@ -1,0 +1,34 @@
+flowchart LR
+  subgraph persona["Personas"]
+    direction TB
+    usuario(["Usuario<br/>organiza sus tareas"])
+  end
+  subgraph interfaz["Interfaz"]
+    direction TB
+    navbar["Barra superior<br/>búsqueda y tema claro u oscuro"]
+    tablero["Tablero<br/>listas y tarjetas"]
+    dnd{{"Arrastrar y soltar<br/>dnd-kit, también por teclado"}}
+  end
+  subgraph estado["Estado"]
+    direction TB
+    reducer{{"Reducer y contexto<br/>acciones de listas y tarjetas"}}
+    filtros{{"Filtros derivados<br/>búsqueda y estado, sin tocar los datos"}}
+  end
+  subgraph persistencia["Persistencia"]
+    direction TB
+    storage[("localStorage<br/>se guarda en cada cambio")]
+  end
+  subgraph entrega["Entrega"]
+    direction TB
+    web["Sitio estático<br/>export de Next.js a Azure"]
+    android["App Android<br/>empaquetada con Capacitor"]
+  end
+  usuario -->|"interactúa"| tablero
+  navbar -->|"busca"| filtros
+  tablero -->|"acciones"| reducer
+  dnd -->|"reordena"| reducer
+  filtros -.->|"vista filtrada"| tablero
+  reducer -->|"persiste"| storage
+  storage -.->|"restaura al abrir"| reducer
+  reducer -->|"build"| web
+  web -->|"sincroniza"| android
